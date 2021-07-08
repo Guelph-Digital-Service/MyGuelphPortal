@@ -13,21 +13,28 @@ import { FiPhoneCall } from "react-icons/fi";
 export default class AppHeader extends React.Component {
   render() {
     return (
+        <>
       <header>
         <nav>
-          <a className="backToGuelphCA" href="https://guelph.ca">
+          <a
+            className="backToGuelphCA"
+            href="https://guelph.staging.wpengine.com/"
+          >
             ← Guelph.ca
           </a>
 
           <div className="rightBox">
-            <a className="contact-us" href="https://guelph.ca/city-hall/contact-us/">
-              <FiPhoneCall className="react-icon"/>
+            <a
+              className="contact-us"
+              href="https://guelph.ca/city-hall/contact-us/"
+            >
+              <FiPhoneCall className="react-icon" />
               Contact Us
             </a>
 
             {isLoggedIn() ? (
               <p>
-                <MdAccountCircle className="react-icon"/>
+                <MdAccountCircle className="react-icon" />
                 Welcome, {currentUser()}
               </p>
             ) : (
@@ -48,6 +55,7 @@ export default class AppHeader extends React.Component {
           </div>
         </div>
       </header>
+      </>
     );
   }
 }

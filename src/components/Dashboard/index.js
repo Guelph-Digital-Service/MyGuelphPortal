@@ -79,8 +79,8 @@ export default class Dashboard extends React.Component<Props, State> {
         {this.state.weatherData ? (<>
             {(this.state.weatherData.main.temp - 273.15).toFixed(1)}°C&nbsp;
             <div className="weatherIcon">
-                {this.state.weatherData.weather[0].description}
-                <img alt="weather icon" src={"http://openweathermap.org/img/w/"+this.state.weatherData.weather[0].icon+".png"}></img>
+                {/* {this.state.weatherData.weather[0].description} */}
+                <img title={this.state.weatherData.weather[0].description} alt={this.state.weatherData.weather[0].description} src={"http://openweathermap.org/img/w/"+this.state.weatherData.weather[0].icon+".png"}></img>
             </div>
             
         </>):(<></>)}
@@ -97,7 +97,7 @@ export default class Dashboard extends React.Component<Props, State> {
             <div className="alignLeft">
               <p>
                 Swimming lesson registration for outdoor pools is now open.
-                <a href="/"> Register early </a>
+                <a href="https://cityofguelph.perfectmind.com/24309/Facilities/BookMe4?widgetId=5ffc8674-d07b-4742-a277-da11f734af68"> Register early </a>
                 before spots fill!
               </p>
               <p>
@@ -106,11 +106,11 @@ export default class Dashboard extends React.Component<Props, State> {
                   href={guelphURL + "/seasonal/outdoor-pools-splash-pads/"}
                 >
                   Outdoor pools
-                </a>{" "}
+                </a>
                 are open.
               </p>
               <p>
-                <a href="/">View all programs and activities</a>
+                <a href={guelphURL + "/living/recreation/recreation-programs/"}>View all programs and activities</a>
               </p>
             </div>
           </ColouredCard>
