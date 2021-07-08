@@ -5,13 +5,20 @@ import styles from "./Dashboard.scss";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { FaRunning, FaRegCalendarAlt, FaCloudSunRain, FaRegNewspaper, FaBriefcase, FaComments, FaExclamation, FaParking, FaRegQuestionCircle} from "react-icons/fa";
+import { FaRunning, FaRegCalendarAlt, FaCloudSunRain, FaRegNewspaper, FaBriefcase, FaComments, FaExclamation, FaParking, FaRegQuestionCircle, FaGavel, FaChevronRight} from "react-icons/fa";
 import { GoMegaphone } from "react-icons/go";
 
 import ColouredCard from "./../ColouredCard";
 
 
 let parser = new Parser();
+const guelphURL = "https://guelph.ca";
+
+var now = new Date();
+var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var day = days[now.getDay()];
+var month = months[now.getMonth()];
 
 export default class Dashboard extends React.Component<Props, State> {
   constructor(props) {
@@ -23,19 +30,19 @@ export default class Dashboard extends React.Component<Props, State> {
     const eventsfeed = await parser.parseURL("https://devguelphca.wpengine.com/events/feed/");
     this.setState({ eventsfeed });
 
-    const newsfeed = await parser.parseURL("https://guelph.ca/feed/?newstype=news-release");
+    const newsfeed = await parser.parseURL(guelphURL + "/feed/?newstype=news-release");
     this.setState({ newsfeed });
 
-    const noticefeed = await parser.parseURL("https://guelph.ca/feed/?newstype=public-notice");
+    const noticefeed = await parser.parseURL(guelphURL + "/feed/?newstype=public-notice");
     this.setState({ noticefeed });
 
-    const seasonalfeed = await parser.parseURL("https://guelph.ca/feed/?post_type=seasonal");
+    const seasonalfeed = await parser.parseURL(guelphURL + "/feed/?post_type=seasonal");
     this.setState({ seasonalfeed });
 
-    const jobfeed = await parser.parseURL("https://guelph.ca/feed/?post_type=job-posting");
+    const jobfeed = await parser.parseURL(guelphURL + "/feed/?post_type=job-posting");
     this.setState({ jobfeed });
 
-    const engagementfeed = await parser.parseURL("https://guelph.ca/feed/?newstype=have-your-say");
+    const engagementfeed = await parser.parseURL(guelphURL + "/feed/?newstype=have-your-say");
     this.setState({ engagementfeed });
   }
 
@@ -44,6 +51,7 @@ export default class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <>
+      <div className="welcomeMessage">{day}, {month} {now.getDay()}<div className="weatherMessage">21.6°C</div></div>
         <div className="row widget-grid col-12">
           <ColouredCard
             color="#478dc9"
@@ -53,20 +61,16 @@ export default class Dashboard extends React.Component<Props, State> {
             <div className="alignLeft">
               <p>
                 Swimming lesson registration for outdoor pools is now open.{" "}
-                <a href=""> Register early </a>
+                <a href="https://cityofguelph.perfectmind.com/24309/Facilities/BookMe4?widgetId=5ffc8674-d07b-4742-a277-da11f734af68">
+                  {" "}
+                  Register early{" "}
+                </a>
                 before spots fill!
               </p>
               <p>
-                <a
-                  title="Open new window to view pools webpage"
-                  href="https://www.kitchener.ca/en/pools-and-swimming/pools.aspx"
-                >
-                  Outdoor pools
+                <a href={guelphURL + "/living/recreation/recreation-programs/"}>
+                  View all programs and activities
                 </a>
-                are open.
-              </p>
-              <p>
-                <a href="">View all programs and activities</a>
               </p>
             </div>
           </ColouredCard>
@@ -78,7 +82,7 @@ export default class Dashboard extends React.Component<Props, State> {
                     <a href={item.link}>{item.title}</a>
                   </div>
                 ))}
-                <a href="https://guelph.ca/newstype/news-release/">
+                <a href={guelphURL + "/newstype/news-release/"}>
                   View more news
                 </a>
               </>
@@ -100,7 +104,7 @@ export default class Dashboard extends React.Component<Props, State> {
                     <a href={item.link}>{item.title}</a>
                   </div>
                 ))}
-                <a href="https://guelph.ca/newstype/public-notice/">
+                <a href={guelphURL + "/newstype/public-notice/"}>
                   View more public notices
                 </a>
               </>
@@ -121,7 +125,7 @@ export default class Dashboard extends React.Component<Props, State> {
                 {this.state.eventsfeed.items.length === 0 ? (
                   <>
                     <p>There are no upcoming events</p>
-                    <a href="https://guelph.ca/events">View events calendar</a>
+                    <a href={guelphURL + "/events"}>View events calendar</a>
                   </>
                 ) : (
                   <>
@@ -131,7 +135,7 @@ export default class Dashboard extends React.Component<Props, State> {
                         <p>{item.pubDate}</p>
                       </div>
                     ))}
-                    <a href="https://guelph.ca/events">View more events</a>
+                    <a href={guelphURL + "/events"}>View more events</a>
                   </>
                 )}
               </>
@@ -159,7 +163,7 @@ export default class Dashboard extends React.Component<Props, State> {
                         <a href={item.link}>{item.title}</a>
                       </div>
                     ))}
-                    <a href="https://guelph.ca/living/seasonal-information/">
+                    <a href={guelphURL + "/living/seasonal-information/"}>
                       View more seasonal information
                     </a>
                   </>
@@ -170,6 +174,20 @@ export default class Dashboard extends React.Component<Props, State> {
                 <CircularProgress size={100} />
               </div>
             )}
+          </ColouredCard>
+          <ColouredCard
+            color="#db474c"
+            title="Council meetings and agenda"
+            icon={<FaGavel />}
+          >
+            <a href={guelphURL + "/city-hall/mayor-and-council/city-council/agendas-and-minutes/"}>
+              View agenda <FaChevronRight />
+            </a>
+            
+            <p></p>
+            <a href={guelphURL + "/news/live/"}>
+              Watch meeting <FaChevronRight />
+            </a>
           </ColouredCard>
           <ColouredCard
             color="#db474c"
@@ -192,7 +210,7 @@ export default class Dashboard extends React.Component<Props, State> {
                         </li>
                       ))}
                     </ul>
-                    <a href="https://devguelphca.wpengine.com/employment-careers/careers-jobs/">
+                    <a href={guelphURL + "/employment-careers/careers-jobs/"}>
                       View all job opportunities
                     </a>
                   </>
@@ -256,12 +274,12 @@ export default class Dashboard extends React.Component<Props, State> {
               a problem tool.
             </p>
             <a href="https://cityofguelph.maps.arcgis.com/apps/CrowdsourceReporter/index.html?appid=bb032c2d08dd435986d5008f2cfa7ab6">
-              Report a problem
+              Report a problem <FaChevronRight />
             </a>
           </ColouredCard>
           <ColouredCard color="#e5cf29" title="Parking" icon={<FaParking />}>
             <a href="https://parkingguelph.aimsparking.com/">
-              Pay a parking ticket
+              Pay a parking ticket <FaChevronRight />
             </a>
             <p></p>
             <p>
