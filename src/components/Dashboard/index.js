@@ -5,7 +5,7 @@ import styles from "./Dashboard.scss";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { FaRunning, FaRegCalendarAlt, FaCloudSunRain, FaRegNewspaper, FaBriefcase, FaComments, FaExclamation, FaParking, FaRegQuestionCircle, FaFileArchive, FaRoad, FaGavel, FaChevronRight} from "react-icons/fa";
+import { FaRunning, FaRegCalendarAlt, FaCloudSunRain, FaRegNewspaper, FaBriefcase, FaComments, FaExclamation, FaParking, FaRegQuestionCircle, FaFileArchive, FaRoad, FaGavel, FaChevronRight, FaStethoscope} from "react-icons/fa";
 import { GoMegaphone } from "react-icons/go";
 
 import ColouredCard from "./../ColouredCard";
@@ -13,6 +13,8 @@ import ColouredCard from "./../ColouredCard";
 import Weather from "./../Weather";
 import Footer from "./../Footer";
 
+import jsdom from "jsdom";
+const { JSDOM } = jsdom;
 
 let parser = new Parser();
 const guelphURL = "/proxy/https://guelph.ca";
@@ -26,7 +28,7 @@ var month = months[now.getMonth()];
 export default class Dashboard extends React.Component<Props, State> {
   constructor(props) {
     super(props);
-    this.state = { eventsfeed: [], newsfeed: [], noticefeed: [], seasonalfeed: [], jobfeed: [], engagementfeed: [], weatherData: null };
+    this.state = { eventsfeed: [], newsfeed: [], noticefeed: [], seasonalfeed: [], jobfeed: [], engagementfeed: [], weatherData: null, publicHealthAlert: null };
   }
 
   async componentDidMount() {
@@ -67,6 +69,15 @@ export default class Dashboard extends React.Component<Props, State> {
         .catch((err) => {
             console.log(err);
         });
+
+(async () => {
+  const response = await fetch("/proxy/https://www.wdgpublichealth.ca/");
+  const text = await response.text();
+  const dom = await new JSDOM(text);
+  const publicHealthAlert = dom.window.document.querySelector(".alert-content").textContent;
+  this.setState({publicHealthAlert})
+//   console.log(this.state.publicHealthAlert);
+})();
   }
 
 
@@ -74,14 +85,13 @@ export default class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <>
-        <div className="welcomeMessage">
+        {/* <div className="welcomeMessage">
           {day}, {month} {now.getDate()}
           <div className="weatherMessage">
             {this.state.weatherData ? (
               <>
                 {(this.state.weatherData.main.temp - 273.15).toFixed(1)}°C&nbsp;
                 <div className="weatherIcon">
-                  {/* {this.state.weatherData.weather[0].description} */}
                   <img
                     title={this.state.weatherData.weather[0].description}
                     alt={this.state.weatherData.weather[0].description}
@@ -97,7 +107,7 @@ export default class Dashboard extends React.Component<Props, State> {
               <></>
             )}
           </div>
-        </div>
+        </div> */}
         <div className="row widget-grid col-12">
           <Weather></Weather>
           <ColouredCard
@@ -350,9 +360,10 @@ export default class Dashboard extends React.Component<Props, State> {
               </a>
             </p>
             <iframe
-              src="https://mapsengine.google.com/map/u/1/embed?mid=zyIzKBGz7kGE.kTXWFp39GFFA"
+              src="https://mapsengine.google.com/map/u/1/embed?mid=zyIzKBGz7kGE.kTXWFp39GFFA&z=11"
               width="98%"
               height="260px"
+              title="map of guelph construciton areas"
             ></iframe>
           </ColouredCard>
           <ColouredCard
@@ -394,6 +405,37 @@ export default class Dashboard extends React.Component<Props, State> {
               </a>
               are available for residents outside the downtown area.
             </p>
+          </ColouredCard>
+          <ColouredCard
+            color="#f0483e"
+            title="COVID-19 updates"
+            icon={<FaStethoscope />}
+          >
+            {this.state.publicHealthAlert ? (
+              <>
+                <p>{this.state.publicHealthAlert}</p>
+              </>
+            ) : (
+              <>
+                <div className="loading-icon">
+                  <CircularProgress size={100} />
+                </div>
+              </>
+            )}
+            {/* <iframe
+              allowfullscreen="true"
+              frameborder="0"
+              height="100%"
+              src="https://app.powerbi.com/view?r=eyJrIjoiZjZhMjM5ZTAtMmVhNS00ODEwLWE1ZjUtMTJkNzVkMGZkODhmIiwidCI6IjA5Mjg0MzdlLTFhZTItNGJhNy1hZmQxLTY5NDhmY2I5MWM0OCJ9"
+              width="100%"
+            ></iframe> */}
+            <a
+              href={
+                guelphURL + "/2021/07/city-of-guelph-responding-to-coronavirus/"
+              }
+            >
+              Learn more on our COVID-19 webpage
+            </a>
           </ColouredCard>
           <ColouredCard
             color="#21b352"
