@@ -10,7 +10,7 @@ import { GoMegaphone } from "react-icons/go";
 
 import ColouredCard from "./../ColouredCard";
 
-// import Weather from "./../Weather";
+import Weather from "./../Weather";
 import Footer from "./../Footer";
 
 
@@ -50,6 +50,9 @@ export default class Dashboard extends React.Component<Props, State> {
 
     fetch("https://api.openweathermap.org/data/2.5/weather?lat=43.5344277&lon=-80.2751873&appid=29dd21d90471c801beead948844acbae", {
         method: "GET",
+        //  headers: new Headers({
+        //     "Content-Type": "application/json",
+        //   }),
     })
         .then((response) => {
             if (response.ok) return response.json();
@@ -71,7 +74,7 @@ export default class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <>
-      <div className="welcomeMessage">{day}, {month} {now.getDay()}
+      <div className="welcomeMessage">{day}, {month} {now.getDate()}
         <div className="weatherMessage">
         {this.state.weatherData ? (<>
             {(this.state.weatherData.main.temp - 273.15).toFixed(1)}°C&nbsp;
@@ -85,7 +88,7 @@ export default class Dashboard extends React.Component<Props, State> {
         </div>
       </div>
         <div className="row widget-grid col-12">
-          {/* <Weather></Weather> */}
+          <Weather></Weather>
           <ColouredCard
             color="#31a7d3"
             title="Programs and activities"
