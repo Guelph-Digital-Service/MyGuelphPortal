@@ -148,7 +148,7 @@ export default function Footer(props) {
                   </svg>
             MyGuelph login
          </a>
-               <a target="_blank" href="https://guelph.ca/how-can-we-help-you/" className="mx-3" rel="noreferrer">
+               <a target="_blank" href="https://cityofguelph.maps.arcgis.com/apps/CrowdsourceReporter/index.html?appid=bb032c2d08dd435986d5008f2cfa7ab6" className="mx-3" rel="noreferrer">
                   <svg xmlns="http://www.w3.org/2000/svg" width="22.955" height="20.103" className="mr-2 mt-n1">
                      <g data-name="alert-triangle (1)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2">
                         <path data-name="Path 30972" d="M9.766 1.963l-8.47 14.14a2 2 0 001.71 3h16.94a2 2 0 001.71-3l-8.47-14.14a2 2 0 00-3.42 0z"></path>

@@ -74,19 +74,30 @@ export default class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <>
-      <div className="welcomeMessage">{day}, {month} {now.getDate()}
-        <div className="weatherMessage">
-        {this.state.weatherData ? (<>
-            {(this.state.weatherData.main.temp - 273.15).toFixed(1)}°C&nbsp;
-            <div className="weatherIcon">
-                {/* {this.state.weatherData.weather[0].description} */}
-                <img title={this.state.weatherData.weather[0].description} alt={this.state.weatherData.weather[0].description} src={"http://openweathermap.org/img/w/"+this.state.weatherData.weather[0].icon+".png"}></img>
-            </div>
-            
-        </>):(<></>)}
-
+        <div className="welcomeMessage">
+          {day}, {month} {now.getDate()}
+          <div className="weatherMessage">
+            {this.state.weatherData ? (
+              <>
+                {(this.state.weatherData.main.temp - 273.15).toFixed(1)}°C&nbsp;
+                <div className="weatherIcon">
+                  {/* {this.state.weatherData.weather[0].description} */}
+                  <img
+                    title={this.state.weatherData.weather[0].description}
+                    alt={this.state.weatherData.weather[0].description}
+                    src={
+                      "http://openweathermap.org/img/w/" +
+                      this.state.weatherData.weather[0].icon +
+                      ".png"
+                    }
+                  ></img>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
-      </div>
         <div className="row widget-grid col-12">
           <Weather></Weather>
           <ColouredCard
@@ -97,7 +108,10 @@ export default class Dashboard extends React.Component<Props, State> {
             <div className="alignLeft">
               <p>
                 Swimming lesson registration for outdoor pools is now open.
-                <a href="https://cityofguelph.perfectmind.com/24309/Facilities/BookMe4?widgetId=5ffc8674-d07b-4742-a277-da11f734af68"> Register early </a>
+                <a href="https://cityofguelph.perfectmind.com/24309/Facilities/BookMe4?widgetId=5ffc8674-d07b-4742-a277-da11f734af68">
+                  {" "}
+                  Register early{" "}
+                </a>
                 before spots fill!
               </p>
               <p>
@@ -110,7 +124,9 @@ export default class Dashboard extends React.Component<Props, State> {
                 are open.
               </p>
               <p>
-                <a href={guelphURL + "/living/recreation/recreation-programs/"}>View all programs and activities</a>
+                <a href={guelphURL + "/living/recreation/recreation-programs/"}>
+                  View all programs and activities
+                </a>
               </p>
             </div>
           </ColouredCard>
@@ -220,7 +236,12 @@ export default class Dashboard extends React.Component<Props, State> {
             title="Council meetings and agenda"
             icon={<FaGavel />}
           >
-            <a href={guelphURL + "/city-hall/mayor-and-council/city-council/agendas-and-minutes/"}>
+            <a
+              href={
+                guelphURL +
+                "/city-hall/mayor-and-council/city-council/agendas-and-minutes/"
+              }
+            >
               View agenda <FaChevronRight />
             </a>
 
@@ -271,7 +292,9 @@ export default class Dashboard extends React.Component<Props, State> {
               <>
                 {this.state.engagementfeed.items.length === 0 ? (
                   <>
-                    <p>There is no engagement opportunities currently available</p>
+                    <p>
+                      There is no engagement opportunities currently available
+                    </p>
                   </>
                 ) : (
                   <>
@@ -308,14 +331,14 @@ export default class Dashboard extends React.Component<Props, State> {
             <p>You can apply for:</p>
             <ul className="listing-list">
               <li>
-                  <a href="https://forms.guelph.ca/ServiceGuelph/Marriage-Licence-Application">
-                    Marriage Application Licence
-                  </a>
+                <a href="https://forms.guelph.ca/ServiceGuelph/Marriage-Licence-Application">
+                  Marriage Application Licence
+                </a>
               </li>
               <li>
-                  <a href="https://forms.guelph.ca/ServiceGuelph/Additional-marriage-licence-documents">
-                    Additional Marriage Application Licence
-                  </a>
+                <a href="https://forms.guelph.ca/ServiceGuelph/Additional-marriage-licence-documents">
+                  Additional Marriage Application Licence
+                </a>
               </li>
             </ul>
           </ColouredCard>
@@ -325,8 +348,12 @@ export default class Dashboard extends React.Component<Props, State> {
               <a href="https://www.google.com/maps/d/viewer?mid=1j51wycPGHyD_1h8Y88CHfOIVdlw&ll=43.53460614358765%2C-80.23371139999999&z=12">
                 road closures
               </a>
-              .
             </p>
+            <iframe
+              src="https://mapsengine.google.com/map/u/1/embed?mid=zyIzKBGz7kGE.kTXWFp39GFFA"
+              width="98%"
+              height="260px"
+            ></iframe>
           </ColouredCard>
           <ColouredCard
             color="#0d675d"
