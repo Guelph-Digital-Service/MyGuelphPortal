@@ -13,8 +13,8 @@ import ColouredCard from "./../ColouredCard";
 import Weather from "./../Weather";
 import Footer from "./../Footer";
 
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+// import jsdom from "jsdom";
+// const { JSDOM } = jsdom;
 
 let parser = new Parser();
 const guelphURL = "/proxy/https://guelph.ca";
@@ -70,14 +70,14 @@ export default class Dashboard extends React.Component<Props, State> {
             console.log(err);
         });
 
-(async () => {
-  const response = await fetch("/proxy/https://www.wdgpublichealth.ca/");
-  const text = await response.text();
-  const dom = await new JSDOM(text);
-  const publicHealthAlert = dom.window.document.querySelector(".alert-content").textContent;
-  this.setState({publicHealthAlert})
-//   console.log(this.state.publicHealthAlert);
-})();
+// (async () => {
+//   const response = await fetch("/proxy/https://www.wdgpublichealth.ca/");
+//   const text = await response.text();
+//   const dom = await new JSDOM(text);
+//   const publicHealthAlert = dom.window.document.querySelector(".alert-content").textContent;
+//   this.setState({publicHealthAlert})
+// //   console.log(this.state.publicHealthAlert);
+// })();
   }
 
 
@@ -406,7 +406,7 @@ export default class Dashboard extends React.Component<Props, State> {
               are available for residents outside the downtown area.
             </p>
           </ColouredCard>
-          <ColouredCard
+          {/* <ColouredCard
             color="#f0483e"
             title="COVID-19 updates"
             icon={<FaStethoscope />}
@@ -422,13 +422,6 @@ export default class Dashboard extends React.Component<Props, State> {
                 </div>
               </>
             )}
-            {/* <iframe
-              allowfullscreen="true"
-              frameborder="0"
-              height="100%"
-              src="https://app.powerbi.com/view?r=eyJrIjoiZjZhMjM5ZTAtMmVhNS00ODEwLWE1ZjUtMTJkNzVkMGZkODhmIiwidCI6IjA5Mjg0MzdlLTFhZTItNGJhNy1hZmQxLTY5NDhmY2I5MWM0OCJ9"
-              width="100%"
-            ></iframe> */}
             <a
               href={
                 guelphURL + "/2021/07/city-of-guelph-responding-to-coronavirus/"
@@ -436,7 +429,7 @@ export default class Dashboard extends React.Component<Props, State> {
             >
               Learn more on our COVID-19 webpage
             </a>
-          </ColouredCard>
+          </ColouredCard> */}
           <ColouredCard
             color="#21b352"
             title="MyGuelph support"
