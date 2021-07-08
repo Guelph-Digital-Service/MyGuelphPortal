@@ -10,7 +10,7 @@ import { GoMegaphone } from "react-icons/go";
 
 import ColouredCard from "./../ColouredCard";
 
-import Weather from "./../Weather";
+// import Weather from "./../Weather";
 import Footer from "./../Footer";
 
 
@@ -26,7 +26,7 @@ var month = months[now.getMonth()];
 export default class Dashboard extends React.Component<Props, State> {
   constructor(props) {
     super(props);
-    this.state = { eventsfeed: [], newsfeed: [], noticefeed: [], seasonalfeed: [], jobfeed: [], engagementfeed: [] };
+    this.state = { eventsfeed: [], newsfeed: [], noticefeed: [], seasonalfeed: [], jobfeed: [], engagementfeed: [], weatherData: null };
   }
 
   async componentDidMount() {
@@ -47,6 +47,23 @@ export default class Dashboard extends React.Component<Props, State> {
 
     const engagementfeed = await parser.parseURL(guelphURL + "/feed/?newstype=have-your-say");
     this.setState({ engagementfeed });
+
+    fetch("https://api.openweathermap.org/data/2.5/weather?lat=43.5344277&lon=-80.2751873&appid=29dd21d90471c801beead948844acbae", {
+        method: "GET",
+    })
+        .then((response) => {
+            if (response.ok) return response.json();
+            return response.json().then((response) => {
+                throw new Error(response.body);
+            });
+        })
+        .then((data) => {
+            const weatherData = data;
+            this.setState({weatherData});
+        })
+        .catch((err) => {
+            console.log(err);
+        });
   }
 
 
@@ -54,9 +71,21 @@ export default class Dashboard extends React.Component<Props, State> {
   render() {
     return (
       <>
-      <div className="welcomeMessage">{day}, {month} {now.getDay()}<div className="weatherMessage">21.6°C</div></div>
+      <div className="welcomeMessage">{day}, {month} {now.getDay()}
+        <div className="weatherMessage">
+        {this.state.weatherData ? (<>
+            {(this.state.weatherData.main.temp - 273.15).toFixed(1)}°C&nbsp;
+            <div className="weatherIcon">
+                {this.state.weatherData.weather[0].description}
+                <img alt="weather icon" src={"http://openweathermap.org/img/w/"+this.state.weatherData.weather[0].icon+".png"}></img>
+            </div>
+            
+        </>):(<></>)}
+
+        </div>
+      </div>
         <div className="row widget-grid col-12">
-          <Weather></Weather>
+          {/* <Weather></Weather> */}
           <ColouredCard
             color="#31a7d3"
             title="Programs and activities"
@@ -198,7 +227,7 @@ export default class Dashboard extends React.Component<Props, State> {
             </a>
           </ColouredCard>
           <ColouredCard
-            color="#db474c"
+            color="#e59d29"
             title="Job opportunities"
             icon={<FaBriefcase />}
           >
@@ -231,7 +260,7 @@ export default class Dashboard extends React.Component<Props, State> {
             )}
           </ColouredCard>
           <ColouredCard
-            color="#e59d29"
+            color="#0a4b96"
             title="Engagement opportunities"
             icon={<FaComments />}
           >
@@ -254,7 +283,7 @@ export default class Dashboard extends React.Component<Props, State> {
                       ))}
                     </ul>
                     <p>
-                      Follow all engagement opportunities on{" "}
+                      Follow all engagement opportunities on
                       <a href="https://www.haveyoursay.guelph.ca/">
                         Have Your Say Guelph
                       </a>
