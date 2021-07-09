@@ -13,8 +13,8 @@ import ColouredCard from "./../ColouredCard";
 import Weather from "./../Weather";
 import Footer from "./../Footer";
 
-// import jsdom from "jsdom";
-// const { JSDOM } = jsdom;
+import jsdom from "jsdom";
+const { JSDOM } = jsdom;
 
 let parser = new Parser();
 const guelphURL = "/proxy/https://guelph.ca";
@@ -52,9 +52,6 @@ export default class Dashboard extends React.Component<Props, State> {
 
     fetch("https://api.openweathermap.org/data/2.5/weather?lat=43.5344277&lon=-80.2751873&appid=29dd21d90471c801beead948844acbae", {
         method: "GET",
-        //  headers: new Headers({
-        //     "Content-Type": "application/json",
-        //   }),
     })
         .then((response) => {
             if (response.ok) return response.json();
@@ -70,14 +67,14 @@ export default class Dashboard extends React.Component<Props, State> {
             console.log(err);
         });
 
-// (async () => {
-//   const response = await fetch("/proxy/https://www.wdgpublichealth.ca/");
-//   const text = await response.text();
-//   const dom = await new JSDOM(text);
-//   const publicHealthAlert = dom.window.document.querySelector(".alert-content").textContent;
-//   this.setState({publicHealthAlert})
-// //   console.log(this.state.publicHealthAlert);
-// })();
+(async () => {
+  const response = await fetch("/proxy/https://www.wdgpublichealth.ca/");
+  const text = await response.text();
+  const dom = await new JSDOM(text);
+  const publicHealthAlert = dom.window.document.querySelector(".alert-content").textContent;
+  this.setState({publicHealthAlert})
+//   console.log(this.state.publicHealthAlert);
+})();
   }
 
 
@@ -406,14 +403,14 @@ export default class Dashboard extends React.Component<Props, State> {
               are available for residents outside the downtown area.
             </p>
           </ColouredCard>
-          {/* <ColouredCard
+          <ColouredCard
             color="#f0483e"
             title="COVID-19 updates"
             icon={<FaStethoscope />}
           >
             {this.state.publicHealthAlert ? (
               <>
-                <p>{this.state.publicHealthAlert}</p>
+                <p>Guelph, {this.state.publicHealthAlert}</p>
               </>
             ) : (
               <>
@@ -429,7 +426,7 @@ export default class Dashboard extends React.Component<Props, State> {
             >
               Learn more on our COVID-19 webpage
             </a>
-          </ColouredCard> */}
+          </ColouredCard>
           <ColouredCard
             color="#21b352"
             title="MyGuelph support"
