@@ -13,17 +13,17 @@ import ColouredCard from "./../ColouredCard";
 import Weather from "./../Weather";
 import Footer from "./../Footer";
 
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+// import jsdom from "jsdom";
+// const { JSDOM } = jsdom;
 
 let parser = new Parser();
 const guelphURL = "/proxy/https://guelph.ca";
 
-var now = new Date();
-var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-var day = days[now.getDay()];
-var month = months[now.getMonth()];
+// var now = new Date();
+// var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+// var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+// var day = days[now.getDay()];
+// var month = months[now.getMonth()];
 
 export default class Dashboard extends React.Component<Props, State> {
   constructor(props) {
@@ -67,14 +67,20 @@ export default class Dashboard extends React.Component<Props, State> {
             console.log(err);
         });
 
-(async () => {
-  const response = await fetch("/proxy/https://www.wdgpublichealth.ca/");
-  const text = await response.text();
-  const dom = await new JSDOM(text);
-  const publicHealthAlert = dom.window.document.querySelector(".alert-content").textContent;
-  this.setState({publicHealthAlert})
-//   console.log(this.state.publicHealthAlert);
-})();
+    fetch("/proxy/https://www.wdgpublichealth.ca/")
+        .then((response) => {            
+            if (response.ok) return response.text();
+            return response.text().then((response) => {
+                throw new Error(response.body);
+            });
+        }).then((data) => {
+            var domparser = new DOMParser();
+            var doc = domparser.parseFromString(data, "text/html");
+            const publicHealthAlert = doc.querySelector(".alert-content").textContent;
+            this.setState({ publicHealthAlert });
+        }).catch((err) => {
+            console.log(err);
+        });
   }
 
 
